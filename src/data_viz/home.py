@@ -28,18 +28,35 @@ def main():
 
     st.markdown("---")
 
-    # Project description
-    st.header("🔍 About the Project")
-    st.write(
-        """
-        **Data Viz QA** simplifies data interaction by allowing you to:
-        - Upload tabular datasets (CSV, Excel).
-        - Ask natural language questions about your data.
-        - Receive tailored visualizations and interpretations.
-        
-        The project leverages advanced large language models like GPT or Claude to understand your queries and provide actionable insights.
-        """
-    )
+    # Create a row of columns (1 for the content, 2 for the button)
+    col1, col2 = st.columns([4, 1])  # Adjust the ratio to get the button on the right side
+
+    with col1:
+        # Project description
+        st.header("🔍 About the Project")
+        st.write(
+            """
+            **Data Viz QA** simplifies data interaction by allowing you to:
+            - Upload tabular datasets (CSV, Excel).
+            - Ask natural language questions about your data.
+            - Receive tailored visualizations and interpretations.
+            
+            The project leverages advanced large language models like GPT or Claude to understand your queries and provide actionable insights.
+            """
+        )
+
+    with col2:
+        # Button to navigate to the chat page (replace the link with the actual chat page link) !!!!!!!!!!!!!!!!!!!!!!!!!
+        st.markdown(
+            """
+            <a href="https://github.com/Mehyarmlaweh" target="_self">
+                <button style="padding: 30px; background-color: #4CAF50; color: white; border: none; border-radius: 12px; cursor: pointer; width: 300px; height: 300px; text-align: center; font-size: 22px;">
+                    Go to Chat Page
+                </button>
+            </a>
+            """, 
+            unsafe_allow_html=True
+        )
 
     # Dataset upload
     st.header("📂 Upload Your Dataset")
