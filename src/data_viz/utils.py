@@ -23,11 +23,11 @@ def footer():
             [![Docs](https://img.shields.io/badge/Documentation-Project_Docs-orange?style=for-the-badge&logo=readthedocs)](#)
             """
         )
-
     with col3:
         st.markdown(
             """
-            [![Demo](https://img.shields.io/badge/Another_Page-Demo-green?style=for-the-badge&logo=streamlit)](#)
+            [![Author](https://img.shields.io/badge/Author-Mehyar_Mlaweh-black?style=for-the-badge&logo=github)](https://github.com/Mehyarmlaweh) 
+            [![Author](https://img.shields.io/badge/Author-Malek_Makhlouf-black?style=for-the-badge&logo=github)](https://github.com/mal-mak)
             """
         )
 
