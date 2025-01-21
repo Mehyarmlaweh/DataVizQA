@@ -1,20 +1,21 @@
 import streamlit as st
+import pandas as pd
+from data_viz.utils import (
+    read_uploaded_file,
+    clean_dataframe,
+    display_dataframe_overview,
+    footer,
+)
 
 # Apply a custom Streamlit theme
-st.set_page_config(
-    page_title="Data Viz QA",
-    page_icon="📊",
-    layout="wide"
-)
+st.set_page_config(page_title="Data Viz QA", page_icon="📊", layout="wide")
 
 
 def main():
     """
-    Enhanced home page for the DataVizQA project.
+    Home page for the DataVizQA project.
     Features:
-    - Modern design with custom themes.
-    - Sections for better navigation.
-    - Interactive buttons for repository and documentation links.
+    - File upload with overview functionality.
     """
     # Title section
     st.title("📊 Data Viz QA")
@@ -25,7 +26,6 @@ def main():
         """
     )
 
-    # Add a horizontal divider
     st.markdown("---")
 
     # Project description
@@ -41,46 +41,48 @@ def main():
         """
     )
 
-    # Dataset upload placeholder
+    # Dataset upload
     st.header("📂 Upload Your Dataset")
     st.write("Drag and drop a file or select one using the file picker below:")
     uploaded_file = st.file_uploader("Choose a file", type=["csv", "xlsx"])
+
     if uploaded_file:
-        st.success(f"Uploaded: {uploaded_file.name}")
+        # Initialize session state for storing DataFrames if not exists
+        if "raw_df" not in st.session_state:
+            st.session_state.raw_df = None
+        if "cleaned_df" not in st.session_state:
+            st.session_state.cleaned_df = None
 
-    # External links as buttons
-    st.markdown("---")
-    st.header("🔗 Explore More")
-    col1, col2, col3 = st.columns(3)
+        # Read the file if it hasn't been read yet
+        if st.session_state.raw_df is None:
+            st.session_state.raw_df = read_uploaded_file(uploaded_file)
 
-    with col1:
-        st.markdown(
-            """
-            [![GitHub](https://img.shields.io/badge/GitHub-Repository-blue?style=for-the-badge&logo=github)](https://github.com/Mehyarmlaweh/DataVizQA)
-            """
-        )
+        if st.session_state.raw_df is not None:
+            col1, col2 = st.columns([1, 2])
 
-    with col2:
-        st.markdown(
-            """
-            [![Docs](https://img.shields.io/badge/Documentation-Project_Docs-orange?style=for-the-badge&logo=readthedocs)](#)
-            """
-        )
+            with col1:
+                if st.button("🧹 Clean Data"):
+                    st.session_state.cleaned_df = clean_dataframe(
+                        st.session_state.raw_df
+                    )
+                    st.success("Data cleaned successfully!")
 
-    with col3:
-        st.markdown(
-            """
-            [![Demo](https://img.shields.io/badge/Another_Page-Demo-green?style=for-the-badge&logo=streamlit)](#)
-            """
-        )
+            with col2:
+                show_cleaned = st.toggle(
+                    "Show cleaned data",
+                    value=False,
+                    disabled=st.session_state.cleaned_df is None,
+                )
 
-    # Footer section
-    st.markdown("---")
-    st.write(
-        """
-        ❤️ **Thank you for using Data Viz QA!**
-        """
-    )
+            # Display either raw or cleaned data based on toggle state
+            if show_cleaned and st.session_state.cleaned_df is not None:
+                display_dataframe_overview(st.session_state.cleaned_df)
+                st.info("Showing cleaned data")
+            else:
+                display_dataframe_overview(st.session_state.raw_df)
+                st.info("Showing raw data")
+
+    footer()
 
 
 if __name__ == "__main__":
