@@ -3,7 +3,8 @@ name = "data-viz"
 version = "0.1.0"
 description = "A data visualization app for tabular datasets."
 authors = [
-    {name = "Mehyar Mlaweh",email = "mehyarmlaweh0@gmail.com"}
+    {name = "Mehyar Mlaweh",email = "mehyarmlaweh0@gmail.com"},
+	{name = "Malek Makhlouf",email = "malekhlouf@gmail.com"}
 ]
 license = {text = "Apache"}
 readme = "README.md"

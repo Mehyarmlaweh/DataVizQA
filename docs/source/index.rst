@@ -4,11 +4,12 @@ Welcome to DataVizQA's documentation!
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
-   :recursive:
 
    installation
    usage
    api
+   tests
+
 
 Indices and tables
 ==================
