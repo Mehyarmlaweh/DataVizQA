@@ -2,44 +2,6 @@ import streamlit as st
 import pandas as pd
 
 
-def footer():
-    """
-    Displays the footer section with external links and a thank-you message.
-    """
-    st.markdown("---")
-    st.header("🔗 Explore More")
-    col1, col2, col3 = st.columns(3)
-
-    with col1:
-        st.markdown(
-            """
-            [![GitHub](https://img.shields.io/badge/GitHub-Repository-blue?style=for-the-badge&logo=github)](https://github.com/Mehyarmlaweh/DataVizQA)
-            """
-        )
-
-    with col2:
-        st.markdown(
-            """
-            [![Docs](https://img.shields.io/badge/Documentation-Project_Docs-orange?style=for-the-badge&logo=readthedocs)](#)
-            """
-        )
-    with col3:
-        st.markdown(
-            """
-            [![Author](https://img.shields.io/badge/Author-Mehyar_Mlaweh-black?style=for-the-badge&logo=github)](https://github.com/Mehyarmlaweh) 
-            [![Author](https://img.shields.io/badge/Author-Malek_Makhlouf-black?style=for-the-badge&logo=github)](https://github.com/mal-mak)
-            """
-        )
-
-    # Footer thank-you message
-    st.markdown("---")
-    st.write(
-        """
-        ❤️ **Thank you for using Data Viz QA!**
-        """
-    )
-
-
 def read_uploaded_file(uploaded_file):
     """
     Read the uploaded file into a pandas DataFrame.
@@ -80,8 +42,8 @@ def clean_dataframe(df):
     # Clean column names
     df_cleaned.columns = df_cleaned.columns.str.strip()
     df_cleaned.columns = df_cleaned.columns.str.lower()
-    df_cleaned.columns = df_cleaned.columns.str.replace(" ", "_")
-    df_cleaned.columns = df_cleaned.columns.str.replace(r"[^\w\s]", "")
+    df_cleaned.columns = df_cleaned.columns.str.replace(r"\s+", "_", regex=True)
+    df_cleaned.columns = df_cleaned.columns.str.replace(r"[^\w\s]", "", regex=True)
 
     # Remove duplicate rows
     initial_rows = len(df_cleaned)
@@ -98,9 +60,12 @@ def clean_dataframe(df):
                     df_cleaned[column].median()
                 )
             else:
-                df_cleaned[column] = df_cleaned[column].fillna(
-                    df_cleaned[column].mode()[0]
-                )
+                if not df_cleaned[column].mode().empty:
+                    df_cleaned[column] = df_cleaned[column].fillna(
+                        df_cleaned[column].mode()[0]
+                    )
+                else:
+                    df_cleaned[column] = df_cleaned[column].fillna("")
             st.info(f"Filled {missing_count} missing values in column '{column}'")
 
     # Strip whitespace from string columns

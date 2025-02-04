@@ -4,7 +4,6 @@ from data_viz.utils import (
     read_uploaded_file,
     clean_dataframe,
     display_dataframe_overview,
-    footer,
 )
 
 # Apply a custom Streamlit theme
@@ -29,7 +28,9 @@ def main():
     st.markdown("---")
 
     # Create a row of columns (1 for the content, 2 for the button)
-    col1, col2 = st.columns([4, 1])  # Adjust the ratio to get the button on the right side
+    col1, col2 = st.columns(
+        [4, 1]
+    )  # Adjust the ratio to get the button on the right side
 
     with col1:
         # Project description
@@ -54,8 +55,8 @@ def main():
                     Go to Chat Page
                 </button>
             </a>
-            """, 
-            unsafe_allow_html=True
+            """,
+            unsafe_allow_html=True,
         )
 
     # Dataset upload
@@ -99,7 +100,39 @@ def main():
                 display_dataframe_overview(st.session_state.raw_df)
                 st.info("Showing raw data")
 
-    footer()
+    # Explore more
+    st.markdown("---")
+    st.header("🔗 Explore More")
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        st.markdown(
+            """
+            [![GitHub](https://img.shields.io/badge/GitHub-Repository-blue?style=for-the-badge&logo=github)](https://github.com/Mehyarmlaweh/DataVizQA)
+            """
+        )
+
+    with col2:
+        st.markdown(
+            """
+            [![Docs](https://img.shields.io/badge/Documentation-Project_Docs-orange?style=for-the-badge&logo=readthedocs)](#)
+            """
+        )
+    with col3:
+        st.markdown(
+            """
+            [![Author](https://img.shields.io/badge/Author-Mehyar_Mlaweh-black?style=for-the-badge&logo=github)](https://github.com/Mehyarmlaweh) 
+            [![Author](https://img.shields.io/badge/Author-Malek_Makhlouf-black?style=for-the-badge&logo=github)](https://github.com/mal-mak)
+            """
+        )
+
+    # Footer thank-you message
+    st.markdown("---")
+    st.write(
+        """
+        ❤️ **Thank you for using Data Viz QA!**
+        """
+    )
 
 
 if __name__ == "__main__":
