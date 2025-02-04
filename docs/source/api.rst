@@ -1,5 +1,8 @@
-API Reference
+Home Page API
 =============
 
-.. automodule:: your_module_name
+.. automodule:: data_viz.home
+   :members:
+
+.. automodule:: data_viz.utils
    :members:
