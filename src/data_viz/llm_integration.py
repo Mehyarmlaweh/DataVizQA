@@ -4,6 +4,8 @@ import anthropic
 import logging
 import pandas as pd
 from dotenv import load_dotenv
+import base64
+from io import BytesIO
 
 # Load environment variables
 load_dotenv()
@@ -46,6 +48,7 @@ def call_llm_for_viz(data: pd.DataFrame, user_request: str) -> str:
     - Use the exact column names from the dataset.
     - The visualization should be relevant to the dataset's structure.
     - If necessary, infer numerical, categorical, or time-based trends.
+    - Use directly the df variable in the environment to access the dataset. don't redefine it.
 
     Provide **only** the Python code output.
     """
@@ -58,4 +61,53 @@ def call_llm_for_viz(data: pd.DataFrame, user_request: str) -> str:
         messages=[{"role": "user", "content": llm_prompt}]
     )
     
+    return response.content[0].text
+
+
+def get_insights(image_uploaded: BytesIO) -> str:
+    logger.info("Calling LLM for insights generation")
+
+    image_data = image_uploaded.getvalue()
+
+    if len(image_data) == 0:
+        logger.error("❌ Image file is empty after reading")
+        return "Error: Image file is empty"
+
+    image_base64 = base64.b64encode(image_data).decode("utf-8")
+
+    prompt = """
+    You are a data analyst. Examine this plot and provide only key insights without any additional text or introductions.
+    Guidelines:
+    - The insights should be relevant to the visualization.
+    - Don't Give additional text or introductions.
+    - Provide only the key insights.
+    - Use markdown to format the insights.
+    - Each insight shoud be in a separate markdown bullet point.
+    - Use markdown fomatting like Bold or italic.
+    """
+
+    response = client.messages.create(
+        model="claude-3-5-sonnet-20241022",
+        max_tokens=1024,
+        messages=[
+            {
+                "role": "user",
+                "content": [
+                    {
+                        "type": "image",
+                        "source": {
+                            "type": "base64",
+                            "data": image_base64,
+                            "media_type": "image/png"  
+                        },
+                    },
+                    {
+                        "type": "text",
+                        "text": prompt
+                    }
+                ],
+            }
+        ],
+    )
+
     return response.content[0].text
