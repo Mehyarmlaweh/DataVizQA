@@ -9,6 +9,12 @@ import importlib
 
 
 class TestHome(unittest.TestCase):
+    """Test suite for the home page functionality of the Data Viz QA application.
+
+    This class contains tests for file upload, data cleaning, and UI components
+    of the main page.
+    """
+
     @patch("data_viz.home.st.file_uploader")
     @patch("data_viz.home.read_uploaded_file")
     @patch("data_viz.home.clean_dataframe")
@@ -129,7 +135,7 @@ class TestHome(unittest.TestCase):
         )
 
 
-comment='''
+comment = '''
     def test_main_execution(self):
         with patch("data_viz.home.main") as mock_main:
             # Execute the __main__ block directly
