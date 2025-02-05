@@ -3,7 +3,7 @@ import pandas as pd
 import re
 import tempfile
 import logging
-from data_viz.llm_integration import call_llm_for_viz, get_insights
+from llm_integration import call_llm_for_viz, get_insights
 import matplotlib.pyplot as plt
 
 # Configure logging
