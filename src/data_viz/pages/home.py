@@ -1,5 +1,4 @@
 import streamlit as st
-import pandas as pd
 from data_viz.utils import (
     read_uploaded_file,
     clean_dataframe,
@@ -48,6 +47,15 @@ def main():
 
     with col2:
         # Button to navigate to the chat page (replace the link with the actual chat page link) !!!!!!!!!!!!!!!!!!!!!!!!!
+        if st.button("🏠 Home Page", key="home_button", use_container_width=True):
+            st.page_link(
+                "app.py",
+                label=None,
+                icon=None,
+                help=None,
+                disabled=False,
+                use_container_width=True,
+            )
         st.markdown(
             """
             <a href="https://github.com/Mehyarmlaweh" target="_self">
@@ -115,14 +123,14 @@ def main():
     with col2:
         st.markdown(
             """
-            [![Docs](https://img.shields.io/badge/Documentation-Project_Docs-orange?style=for-the-badge&logo=readthedocs)](#)
+            [![Author](https://img.shields.io/badge/Author-Mehyar_Mlaweh-black?style=for-the-badge&logo=github)](https://github.com/Mehyarmlaweh) 
+            [![Author](https://img.shields.io/badge/Author-Malek_Makhlouf-black?style=for-the-badge&logo=github)](https://github.com/mal-mak)
             """
         )
     with col3:
         st.markdown(
             """
-            [![Author](https://img.shields.io/badge/Author-Mehyar_Mlaweh-black?style=for-the-badge&logo=github)](https://github.com/Mehyarmlaweh) 
-            [![Author](https://img.shields.io/badge/Author-Malek_Makhlouf-black?style=for-the-badge&logo=github)](https://github.com/mal-mak)
+            [![Docs](https://img.shields.io/badge/Documentation-Project_Docs-orange?style=for-the-badge&logo=readthedocs)](https://mehyarmlaweh.github.io/DataVizQA/)
             """
         )
 

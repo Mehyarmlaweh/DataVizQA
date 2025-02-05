@@ -1,11 +1,7 @@
-from data_viz.home import main
+from data_viz.pages.home import main
 import unittest
-from unittest.mock import patch, MagicMock, ANY
+from unittest.mock import patch, MagicMock
 import pandas as pd
-import streamlit as st
-from io import StringIO
-import data_viz.home
-import importlib
 
 
 class TestHome(unittest.TestCase):
