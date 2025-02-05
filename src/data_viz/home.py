@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from data_viz.utils import (
+from utils import (
     read_uploaded_file,
     clean_dataframe,
     display_dataframe_overview,
