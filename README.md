@@ -38,7 +38,12 @@ The application is built using **Streamlit** for the interface and integrates **
 ├── poetry.lock                  # Poetry dependency lock file
 ├── pyproject.toml               # Poetry project configuration
 ├── README.md                    # Project documentation
+├── assets/                      # Folder containing diagrams
+│   ├── diagram.png              # Project architecture diagram
 ```
+
+## Architecture Diagram
+![Project Architecture](assets/diagram.png)
 
 ## Installation
 1. Clone the repository:
