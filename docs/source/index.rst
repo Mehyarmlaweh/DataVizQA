@@ -2,12 +2,17 @@ Welcome to DataVizQA's documentation!
 =====================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: Contents:
 
    installation
    usage
-   api
+   main
+   utils
+   home
+   llm_integration
+   chat
+   insights
    tests
 
 

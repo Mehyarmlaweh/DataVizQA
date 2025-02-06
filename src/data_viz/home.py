@@ -6,6 +6,16 @@ from data_viz.utils import (
 )
 
 def explore_more():
+    """
+    Display the explore more section of the application with links to GitHub repository,
+    documentation, and authors information.
+    
+    This function creates a section with three columns containing:
+    - GitHub repository link
+    - Documentation link
+    - Author information links
+    It also includes a thank you message at the bottom.
+    """
     # Explore more
     st.markdown("---")
     st.header("🔗 Explore More")
@@ -42,9 +52,16 @@ def explore_more():
 
 def home_page():
     """
-    Home page for the DataVizQA project.
+    Display the main home page of the DataVizQA application.
+    
     Features:
-    - File upload with overview functionality.
+    - Displays project title and description
+    - Provides file upload functionality for CSV and Excel files
+    - Offers data cleaning capabilities
+    - Shows data overview with toggle between raw and cleaned data
+    
+    The function manages the session state to store both raw and cleaned
+    versions of the uploaded dataset.
     """
     # Title section
     st.title("📊 Data Viz QA")

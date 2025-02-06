@@ -1,4 +1,3 @@
-# file: llm_integration.py
 import os
 import anthropic
 import logging
@@ -68,6 +67,19 @@ def call_llm_for_viz(data: pd.DataFrame, user_request: str) -> str:
 
 
 def get_insights(image_uploaded: BytesIO) -> str:
+    """
+    Analyze an uploaded image using LLM to generate insights about the visualization.
+
+    Args:
+        image_uploaded (BytesIO): The uploaded image file in BytesIO format.
+
+    Returns:
+        str: Markdown-formatted string containing key insights about the visualization.
+            Returns an error message if the image processing fails.
+
+    Raises:
+        None: Errors are logged and returned as strings in the response.
+    """
     logger.info("Calling LLM for insights generation")
 
     image_data = image_uploaded.getvalue()

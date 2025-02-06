@@ -16,6 +16,27 @@ logger = logging.getLogger(__name__)
 
 
 def data_viz_chat_page():
+    """
+    Renders the main data visualization chat interface page in Streamlit.
+    
+    This function provides the following features:
+    - File upload interface for CSV and Excel files
+    - Data cleaning capabilities with toggle to view raw/cleaned data
+    - Dataset overview and summary statistics
+    - Natural language interface for visualization generation
+    - Code generation and visualization rendering
+    
+    The function maintains the state of both raw and cleaned DataFrames using
+    Streamlit's session state, ensuring persistence across reruns.
+    
+    Returns:
+        None. All output is rendered directly to the Streamlit interface.
+    
+    Raises:
+        Various exceptions may be caught and displayed in the Streamlit UI,
+        particularly during visualization generation and execution.
+    """
+    
     st.title("📊 AI-Powered Data Visualization")
     st.markdown("🚀 Generate insightful visualizations using AI-powered suggestions!")
 
