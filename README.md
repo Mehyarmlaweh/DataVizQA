@@ -5,6 +5,9 @@ DataVizQA is a user-friendly application that allows users to interact with tabu
 
 The application is built using **Streamlit** for the interface and integrates **Claude 3.5 Sonnet** to generate Python code for visualizations. Users can upload data, clean it, and generate insightful plots with AI assistance. Additionally, users can upload plots and receive automatic insights and interpretations.
 
+## View the App
+You can access the Streamlit-hosted application here: [View DataVizQA](https://viewyourdata.streamlit.app/)
+
 ## Features
 - **Home Page**: 
   - General information about the application.
