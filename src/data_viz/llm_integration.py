@@ -26,44 +26,48 @@ def call_llm_for_viz(data: pd.DataFrame, user_request: str) -> str:
     """
     Calls the LLM to generate Python visualization code based on dataset structure.
     """
-    dataset_info = f"""
-    Column Names and Types:
-    {data.dtypes.to_string()}
+    if data.empty:
+        logger.error("❌ Empty DataFrame provided for visualization")
+        return "Error: Empty DataFrame provided"
+    else:
+        dataset_info = f"""
+        Column Names and Types:
+        {data.dtypes.to_string()}
 
-    Dataset Description:
-    {data.describe(include='all').to_string()}
-    """
+        Dataset Description:
+        {data.describe(include='all').to_string()}
+        """
 
-    llm_prompt = f"""
-    You are an expert in Python data visualization. Given the dataset structure below, generate an optimal visualization 
-    using either `matplotlib`, `seaborn`, or `plotly` based on the user request.
+        llm_prompt = f"""
+        You are an expert in Python data visualization. Given the dataset structure below, generate an optimal visualization 
+        using either `matplotlib`, `seaborn`, or `plotly` based on the user request.
 
-    Dataset Overview:
-    {dataset_info}
+        Dataset Overview:
+        {dataset_info}
 
-    User Request:
-    {user_request}
+        User Request:
+        {user_request}
 
-    Guidelines:
-    - Use only Python code, with no explanations or comments.
-    - Ensure the code is executable within a Streamlit app.
-    - Use the exact column names from the dataset.
-    - The visualization should be relevant to the dataset's structure.
-    - If necessary, infer numerical, categorical, or time-based trends.
-    - Use directly the df variable in the environment to access the dataset. don't redefine it.
+        Guidelines:
+        - Use only Python code, with no explanations or comments.
+        - Ensure the code is executable within a Streamlit app.
+        - Use the exact column names from the dataset.
+        - The visualization should be relevant to the dataset's structure.
+        - If necessary, infer numerical, categorical, or time-based trends.
+        - Use directly the df variable in the environment to access the dataset. don't redefine it.
 
-    Provide **only** the Python code output.
-    """
+        Provide **only** the Python code output.
+        """
 
-    logger.info("Calling LLM for visualization generation")
+        logger.info("Calling LLM for visualization generation")
 
-    response = client.messages.create(
-        model="claude-3-5-sonnet-20241022",
-        max_tokens=8000,
-        messages=[{"role": "user", "content": llm_prompt}],
-    )
+        response = client.messages.create(
+            model="claude-3-5-sonnet-20241022",
+            max_tokens=8000,
+            messages=[{"role": "user", "content": llm_prompt}],
+        )
 
-    return response.content[0].text
+        return response.content[0].text
 
 
 def get_insights(image_uploaded: BytesIO) -> str:
