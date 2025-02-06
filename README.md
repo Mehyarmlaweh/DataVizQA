@@ -50,8 +50,8 @@ The application is built using **Streamlit** for the interface and integrates **
 ## Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/data-viz-qa.git
-   cd data-viz-qa
+   git clone https://github.com/Mehyarmlaweh/DataVizQA.git
+   cd DataVizQA
    ```
 2. Install dependencies using Poetry:
    ```bash
