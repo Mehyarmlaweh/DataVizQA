@@ -31,7 +31,7 @@ def explore_more():
     with col2:
         st.markdown(
             """
-            [![Docs](https://img.shields.io/badge/Documentation-Project_Docs-orange?style=for-the-badge&logo=readthedocs)](#)
+            [![Docs](https://img.shields.io/badge/Documentation-Project_Docs-orange?style=for-the-badge&logo=readthedocs)](https://mehyarmlaweh.github.io/DataVizQA)
             """
         )
     with col3:
