@@ -1,8 +1,8 @@
 import streamlit as st
 import re
 import logging
-from data_viz.llm_integration import call_llm_for_viz
-from data_viz.utils import (
+from llm_integration import call_llm_for_viz
+from utils import (
     read_uploaded_file,
     clean_dataframe,
     display_dataframe_overview,

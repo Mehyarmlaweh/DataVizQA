@@ -1,5 +1,5 @@
 import streamlit as st
-from data_viz.llm_integration import get_insights
+from llm_integration import get_insights
 
 
 def get_insights_page():

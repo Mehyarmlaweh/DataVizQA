@@ -8,9 +8,9 @@ It provides navigation between different pages:
 """
 
 import streamlit as st
-from data_viz.home import home_page, explore_more
-from data_viz.chat import data_viz_chat_page
-from data_viz.insights import get_insights_page
+from home import home_page, explore_more
+from chat import data_viz_chat_page
+from insights import get_insights_page
 
 
 def main():

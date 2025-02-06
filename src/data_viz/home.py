@@ -1,5 +1,5 @@
 import streamlit as st
-from data_viz.utils import (
+from utils import (
     read_uploaded_file,
     clean_dataframe,
     display_dataframe_overview,
