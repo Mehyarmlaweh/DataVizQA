@@ -9,8 +9,8 @@ Then run the following commands:
 ------------------------
 .. code-block:: bash
 
-   git clone https://github.com/your-username/data-viz-qa.git
-   cd data-viz-qa        
+   git clone https://github.com/Mehyarmlaweh/DataVizQA.git
+   cd DataVizQA   
 
 2. Install dependencies using Poetry:
 -------------------------------------
