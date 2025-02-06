@@ -14,7 +14,6 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-
 def data_viz_chat_page():
     """
     Renders the main data visualization chat interface page in Streamlit.
@@ -39,24 +38,38 @@ def data_viz_chat_page():
     
     st.title("📊 AI-Powered Data Visualization")
     st.markdown("🚀 Generate insightful visualizations using AI-powered suggestions!")
+    
+    # Add a text input for the user's Claude API key
+    if "api_key" not in st.session_state:
+        st.session_state.api_key = ""
+    
+    st.session_state.api_key = st.text_input(
+        "🔑 Enter your Claude API Key (from Anthropic):",
+        value=st.session_state.api_key,
+        type="password",  # Mask the input for security
+    )
+    
+    if not st.session_state.api_key.strip():
+        st.warning("⚠️ Please enter a valid API key to proceed.")
+        return
 
     df = None
     uploaded_file = st.file_uploader("Choose a file", type=["csv", "xlsx"])
+    
     if uploaded_file:
         # Initialize session state for storing DataFrames if not exists
         if "raw_df" not in st.session_state:
             st.session_state.raw_df = None
         if "cleaned_df" not in st.session_state:
             st.session_state.cleaned_df = None
-
+        
         # Read the file if it hasn't been read yet
         if st.session_state.raw_df is None:
             st.session_state.raw_df = read_uploaded_file(uploaded_file)
             df = st.session_state.raw_df
-
+        
         if st.session_state.raw_df is not None:
             col1, col2 = st.columns([1, 2])
-
             with col1:
                 if st.button("🧹 Clean Data"):
                     st.session_state.cleaned_df = clean_dataframe(
@@ -64,14 +77,14 @@ def data_viz_chat_page():
                     )
                     df = st.session_state.cleaned_df
                     st.success("Data cleaned successfully!")
-
+            
             with col2:
                 show_cleaned = st.toggle(
                     "Show cleaned data",
                     value=False,
                     disabled=st.session_state.cleaned_df is None,
                 )
-
+            
             # Display either raw or cleaned data based on toggle state
             if show_cleaned and st.session_state.cleaned_df is not None:
                 display_dataframe_overview(st.session_state.cleaned_df)
@@ -85,49 +98,66 @@ def data_viz_chat_page():
                 st.write(st.session_state.raw_df.describe())
                 st.info("Showing raw data")
                 df = st.session_state.raw_df
-
+    
     user_prompt = st.text_area(
         "📝 Describe the visualization you want:",
         placeholder="Example: Show a bar chart of categorical data",
     )
+    
     if st.button("🚀 Generate Visualization"):
         if df is not None:
             if user_prompt.strip():
                 with st.spinner("⏳ Generating visualization code..."):
-
-                    generated_code = call_llm_for_viz(df, user_prompt)
-                    st.subheader("🖥 Generated Code")
-                    st.code(generated_code, language="python")
-                    match = re.search(
-                        r"```python\n(.*?)\n```", generated_code, re.DOTALL
-                    )
-
-                    if match:
-                        python_code = match.group(1)
-                        safe_code = python_code.replace("plt.show()", "st.pyplot(plt)")
-                        st.subheader("📊 Visualization")
-                        try:
-                            if safe_code:
-                                exec(safe_code, globals())
-                            st.markdown(
-                                "💡 **Kindly save this plot to get insights on it from the section Get Insights.**"
-                            )
-
-                        except Exception as e:
-                            st.error(f"⚠️ Error executing visualization: {e}")
-                            logger.error(f"⚠️ Error executing visualization: {e}")
-                    elif generated_code:
-                        try:
-                            exec(generated_code, globals())
-                            st.markdown(
-                                "💡 **Kindly save this plot to get insights on it from the section Get Insights.**"
-                            )
-                        except Exception as e:
-                            st.error(f"⚠️ Error executing visualization: {e}")
-                            logger.error(f"⚠️ Error executing visualization: {e}")
-                    else:
-                        st.warning("⚠️ No valid Python code detected in the response.")
-
+                    try:
+                        # Call the LLM to generate code
+                        generated_code = call_llm_for_viz(
+                            df, user_prompt, API_KEY=st.session_state.api_key
+                        )
+                        
+                        # Display the generated code
+                        st.subheader("🖥 Generated Code")
+                        st.code(generated_code, language="python")
+                        
+                        # Dynamically replace 'df' with the actual DataFrame variable
+                        if show_cleaned and st.session_state.cleaned_df is not None:
+                            actual_df_variable = "st.session_state.cleaned_df"
+                        else:
+                            actual_df_variable = "st.session_state.raw_df"
+                        
+                        # Replace 'df' with the actual DataFrame variable in the generated code
+                        modified_code = generated_code.replace("df", actual_df_variable)
+                        
+                        # Extract Python code from the response
+                        match = re.search(r"```python\n(.*?)\n```", modified_code, re.DOTALL)
+                        if match:
+                            python_code = match.group(1)
+                            safe_code = python_code.replace("plt.show()", "st.pyplot(plt)")
+                            
+                            # Execute the modified code
+                            st.subheader("📊 Visualization")
+                            try:
+                                if safe_code:
+                                    exec(safe_code, globals())
+                                st.markdown(
+                                    "💡 **Kindly save this plot to get insights on it from the section Get Insights.**"
+                                )
+                            except Exception as e:
+                                st.error(f"⚠️ Error executing visualization: {e}")
+                                logger.error(f"⚠️ Error executing visualization: {e}")
+                        elif modified_code:
+                            try:
+                                exec(modified_code, globals())
+                                st.markdown(
+                                    "💡 **Kindly save this plot to get insights on it from the section Get Insights.**"
+                                )
+                            except Exception as e:
+                                st.error(f"⚠️ Error executing visualization: {e}")
+                                logger.error(f"⚠️ Error executing visualization: {e}")
+                        else:
+                            st.warning("⚠️ No valid Python code detected in the response.")
+                    except Exception as e:
+                        st.error(f"⚠️ Error calling LLM: {e}")
+                        logger.error(f"⚠️ Error calling LLM: {e}")
             else:
                 st.warning("⚠️ Please describe the visualization you want.")
         else:
