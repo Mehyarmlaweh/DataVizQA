@@ -20,16 +20,18 @@ The application is built using **Streamlit** for the interface and integrates **
 ## Project Structure
 ```
 📦 data-viz
-├── .github/                     # GitHub-specific configurations
+├── .github/workflows            # GitHub-specific configurations
+│   ├── data_viz/                # Github Workflows
 ├── docs/                        # Documentation files
 ├── src/                         # Source code
 │   ├── data_viz/                # Main application directory
 │   │   ├── __init__.py          # Package initialization
-│   │   ├── home.py              # Home page implementation
 │   │   ├── chat.py              # Handles interactions with Claude 3.5 Sonnet
+│   │   ├── home.py              # Home page implementation
+│   │   ├── insights.py          # Insights page implementation
 │   │   ├── llm_integration.py   # LLM request handling
+│   │   ├── main.py              # Main application entry point and routing
 │   │   ├── utils.py             # Utility functions
-│   │   ├── __pycache__/         # Python cache files
 ├── tests/                       # Unit tests
 ├── .env                         # Environment variables
 ├── .gitignore                   # Git ignore file
@@ -61,7 +63,7 @@ The application is built using **Streamlit** for the interface and integrates **
    ```
 4. Run the Streamlit application:
    ```bash
-   streamlit run src/data_viz/home.py
+   streamlit run src/data_viz/main.py
    ```
 
 ## Usage
