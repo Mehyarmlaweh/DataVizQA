@@ -20,7 +20,7 @@ The application is built using **Streamlit** for the interface and integrates **
 ## Project Structure
 ```
 📦 data-viz
-├── .github/            		 # GitHub-specific configurations
+├── .github/                     # GitHub-specific configurations
 │   ├── workflows/               # Github Workflows
 ├── docs/                        # Documentation files
 ├── src/                         # Source code
