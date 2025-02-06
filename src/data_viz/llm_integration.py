@@ -11,7 +11,9 @@ from io import BytesIO
 load_dotenv()
 
 # Configure logging
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
 logger = logging.getLogger(__name__)
 
 # Initialize Anthropic client
@@ -19,6 +21,7 @@ API_KEY = os.getenv("ANTHROPIC_API_KEY")
 if not API_KEY:
     raise ValueError("Anthropic API key not found in .env file.")
 client = anthropic.Anthropic(api_key=API_KEY)
+
 
 def call_llm_for_viz(data: pd.DataFrame, user_request: str) -> str:
     """
@@ -31,7 +34,7 @@ def call_llm_for_viz(data: pd.DataFrame, user_request: str) -> str:
     Dataset Description:
     {data.describe(include='all').to_string()}
     """
-    
+
     llm_prompt = f"""
     You are an expert in Python data visualization. Given the dataset structure below, generate an optimal visualization 
     using either `matplotlib`, `seaborn`, or `plotly` based on the user request.
@@ -52,15 +55,15 @@ def call_llm_for_viz(data: pd.DataFrame, user_request: str) -> str:
 
     Provide **only** the Python code output.
     """
-    
+
     logger.info("Calling LLM for visualization generation")
-    
+
     response = client.messages.create(
         model="claude-3-5-sonnet-20241022",
         max_tokens=8000,
-        messages=[{"role": "user", "content": llm_prompt}]
+        messages=[{"role": "user", "content": llm_prompt}],
     )
-    
+
     return response.content[0].text
 
 
@@ -98,13 +101,10 @@ def get_insights(image_uploaded: BytesIO) -> str:
                         "source": {
                             "type": "base64",
                             "data": image_base64,
-                            "media_type": "image/png"  
+                            "media_type": "image/png",
                         },
                     },
-                    {
-                        "type": "text",
-                        "text": prompt
-                    }
+                    {"type": "text", "text": prompt},
                 ],
             }
         ],

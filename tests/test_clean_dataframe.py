@@ -1,6 +1,5 @@
 import unittest
 import pandas as pd
-import streamlit as st
 from unittest.mock import patch
 from data_viz.utils import clean_dataframe
 

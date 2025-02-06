@@ -1,16 +1,46 @@
 import streamlit as st
-import pandas as pd
-from utils import (
+from data_viz.utils import (
     read_uploaded_file,
     clean_dataframe,
     display_dataframe_overview,
 )
 
-# Apply a custom Streamlit theme
-st.set_page_config(page_title="Data Viz QA", page_icon="📊", layout="wide")
+def explore_more():
+    # Explore more
+    st.markdown("---")
+    st.header("🔗 Explore More")
+    col1, col2, col3 = st.columns(3)
 
+    with col1:
+        st.markdown(
+            """
+            [![GitHub](https://img.shields.io/badge/GitHub-Repository-blue?style=for-the-badge&logo=github)](https://github.com/Mehyarmlaweh/DataVizQA)
+            """
+        )
 
-def main():
+    with col2:
+        st.markdown(
+            """
+            [![Docs](https://img.shields.io/badge/Documentation-Project_Docs-orange?style=for-the-badge&logo=readthedocs)](#)
+            """
+        )
+    with col3:
+        st.markdown(
+            """
+            [![Author](https://img.shields.io/badge/Author-Mehyar_Mlaweh-black?style=for-the-badge&logo=github)](https://github.com/Mehyarmlaweh) 
+            [![Author](https://img.shields.io/badge/Author-Malek_Makhlouf-black?style=for-the-badge&logo=github)](https://github.com/mal-mak)
+            """
+        )
+
+    # Footer thank-you message
+    st.markdown("---")
+    st.write(
+        """
+        ❤️ **Thank you for using Data Viz QA!**
+        """
+    )
+
+def home_page():
     """
     Home page for the DataVizQA project.
     Features:
@@ -47,17 +77,7 @@ def main():
         )
 
     with col2:
-        # Button to navigate to the chat page (replace the link with the actual chat page link) !!!!!!!!!!!!!!!!!!!!!!!!!
-        st.markdown(
-            """
-            <a href="https://github.com/Mehyarmlaweh" target="_self">
-                <button style="padding: 30px; background-color: #4CAF50; color: white; border: none; border-radius: 12px; cursor: pointer; width: 300px; height: 300px; text-align: center; font-size: 22px;">
-                    Go to Chat Page
-                </button>
-            </a>
-            """,
-            unsafe_allow_html=True,
-        )
+        pass
 
     # Dataset upload
     st.header("📂 Upload Your Dataset")
@@ -99,41 +119,3 @@ def main():
             else:
                 display_dataframe_overview(st.session_state.raw_df)
                 st.info("Showing raw data")
-
-    # Explore more
-    st.markdown("---")
-    st.header("🔗 Explore More")
-    col1, col2, col3 = st.columns(3)
-
-    with col1:
-        st.markdown(
-            """
-            [![GitHub](https://img.shields.io/badge/GitHub-Repository-blue?style=for-the-badge&logo=github)](https://github.com/Mehyarmlaweh/DataVizQA)
-            """
-        )
-
-    with col2:
-        st.markdown(
-            """
-            [![Docs](https://img.shields.io/badge/Documentation-Project_Docs-orange?style=for-the-badge&logo=readthedocs)](#)
-            """
-        )
-    with col3:
-        st.markdown(
-            """
-            [![Author](https://img.shields.io/badge/Author-Mehyar_Mlaweh-black?style=for-the-badge&logo=github)](https://github.com/Mehyarmlaweh) 
-            [![Author](https://img.shields.io/badge/Author-Malek_Makhlouf-black?style=for-the-badge&logo=github)](https://github.com/mal-mak)
-            """
-        )
-
-    # Footer thank-you message
-    st.markdown("---")
-    st.write(
-        """
-        ❤️ **Thank you for using Data Viz QA!**
-        """
-    )
-
-
-if __name__ == "__main__":
-    main()
